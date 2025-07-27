@@ -1,0 +1,20 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📚 TypeScript SDK Documentation
+    url: https://docs.agentmeshprotocol.io/typescript-sdk
+    about: Check our comprehensive TypeScript/JavaScript SDK documentation
+  - name: 🌐 JavaScript Examples
+    url: https://github.com/agentmeshprotocol/amp-examples/tree/main/typescript
+    about: Browse TypeScript/JavaScript SDK examples and tutorials
+  - name: 💬 Community Discussions
+    url: https://github.com/orgs/agentmeshprotocol/discussions
+    about: Ask questions and discuss ideas with the community
+  - name: 🔒 Private Security Report
+    url: https://github.com/agentmeshprotocol/amp-typescript-sdk/security/advisories/new
+    about: Report security vulnerabilities privately
+  - name: 📦 NPM Package
+    url: https://www.npmjs.com/package/@agentmeshprotocol/typescript-sdk
+    about: View the official NPM package page
+  - name: 🚀 TypeScript SDK Roadmap
+    url: https://github.com/orgs/agentmeshprotocol/projects
+    about: View our TypeScript SDK roadmap and planned features

@@ -1,0 +1,292 @@
+name: Dependency Updates
+
+on:
+  schedule:
+    # Run weekly on Mondays at 10 AM UTC
+    - cron: '0 10 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-npm-dependencies:
+    name: Update NPM Dependencies
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: "18"
+        cache: 'npm'
+
+    - name: Install npm-check-updates
+      run: npm install -g npm-check-updates
+
+    - name: Update dependencies
+      run: |
+        # Update package.json
+        ncu -u --target minor
+        
+        # Install updated dependencies
+        npm install
+        
+        # Update lock file
+        npm audit fix --force || echo "Audit fix completed with warnings"
+
+    - name: Run tests to verify updates
+      run: |
+        npm run build
+        npm run test:unit
+
+    - name: Check for security vulnerabilities
+      run: |
+        npm audit --audit-level=moderate
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: "chore: update npm dependencies"
+        title: "🔄 Automated NPM dependency updates"
+        body: |
+          ## Automated Dependency Updates
+          
+          This PR contains automated updates to NPM dependencies.
+          
+          ### Changes
+          - Updated all NPM dependencies to latest compatible versions
+          - Ran security audit with `npm audit`
+          - Verified build and tests pass
+          
+          ### Testing
+          Please ensure CI passes before merging.
+          
+          ### Security Notes
+          Review any security-related dependency updates carefully.
+          
+          ---
+          *This PR was created automatically by the dependency update workflow.*
+        branch: dependency-updates/npm
+        delete-branch: true
+        labels: |
+          dependencies
+          automated
+          npm
+
+  update-dev-dependencies:
+    name: Update Dev Dependencies
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: "18"
+        cache: 'npm'
+
+    - name: Install npm-check-updates
+      run: npm install -g npm-check-updates
+
+    - name: Update dev dependencies only
+      run: |
+        # Update only dev dependencies to latest
+        ncu -u --dep dev
+        
+        # Install updated dependencies
+        npm install
+
+    - name: Run tests with updated dev dependencies
+      run: |
+        npm run lint
+        npm run type-check
+        npm run build
+        npm run test
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: "chore: update dev dependencies"
+        title: "🛠️ Update development dependencies"
+        body: |
+          ## Development Dependency Updates
+          
+          This PR updates development dependencies to their latest versions.
+          
+          ### Changes
+          - Updated TypeScript, ESLint, Jest, and other dev tools
+          - Verified linting, type checking, and tests pass
+          
+          ### Impact
+          These changes should not affect the published package.
+          
+          ---
+          *This PR was created automatically by the dependency update workflow.*
+        branch: dependency-updates/dev
+        delete-branch: true
+        labels: |
+          dependencies
+          automated
+          dev-tools
+
+  update-types:
+    name: Update Type Definitions
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: "18"
+        cache: 'npm'
+
+    - name: Install npm-check-updates
+      run: npm install -g npm-check-updates
+
+    - name: Update @types packages
+      run: |
+        # Update only @types packages
+        ncu -u --filter "/@types/"
+        
+        # Install updated type definitions
+        npm install
+
+    - name: Run type checking
+      run: |
+        npm run type-check
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: "chore: update TypeScript type definitions"
+        title: "📝 Update TypeScript type definitions"
+        body: |
+          ## TypeScript Type Definition Updates
+          
+          This PR updates @types packages to their latest versions.
+          
+          ### Changes
+          - Updated all @types/* packages
+          - Verified TypeScript compilation passes
+          
+          ### Testing
+          Type checking has been verified to pass.
+          
+          ---
+          *This PR was created automatically by the dependency update workflow.*
+        branch: dependency-updates/types
+        delete-branch: true
+        labels: |
+          dependencies
+          automated
+          typescript
+
+  security-audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    needs: [update-npm-dependencies]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: "18"
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run npm audit
+      run: |
+        npm audit --json > npm-audit.json || echo "Audit completed with findings"
+
+    - name: Run Snyk security test
+      uses: snyk/actions/node@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        args: --json --file=package.json > snyk-audit.json
+      continue-on-error: true
+
+    - name: Analyze audit results
+      run: |
+        # Check for high/critical vulnerabilities
+        if [ -f npm-audit.json ]; then
+          HIGH_VULNS=$(jq '.metadata.vulnerabilities.high // 0' npm-audit.json)
+          CRITICAL_VULNS=$(jq '.metadata.vulnerabilities.critical // 0' npm-audit.json)
+          
+          if [ "$HIGH_VULNS" -gt 0 ] || [ "$CRITICAL_VULNS" -gt 0 ]; then
+            echo "HIGH_SEVERITY_FOUND=true" >> $GITHUB_ENV
+          fi
+        fi
+
+    - name: Create security issue on vulnerabilities
+      if: env.HIGH_SEVERITY_FOUND == 'true'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          let auditResults = '';
+          
+          if (fs.existsSync('npm-audit.json')) {
+            const audit = JSON.parse(fs.readFileSync('npm-audit.json', 'utf8'));
+            auditResults += `**NPM Audit Results:**\n`;
+            auditResults += `- Critical: ${audit.metadata.vulnerabilities.critical || 0}\n`;
+            auditResults += `- High: ${audit.metadata.vulnerabilities.high || 0}\n`;
+            auditResults += `- Moderate: ${audit.metadata.vulnerabilities.moderate || 0}\n`;
+            auditResults += `- Low: ${audit.metadata.vulnerabilities.low || 0}\n\n`;
+          }
+          
+          github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: '🚨 High/Critical security vulnerabilities detected',
+            body: `Security scan detected high or critical vulnerabilities in dependencies.
+            
+            ${auditResults}
+            
+            **Action Required:**
+            1. Review the vulnerability details
+            2. Update affected dependencies
+            3. Test the updates thoroughly
+            4. Consider using \`npm audit fix\` or manual updates
+            
+            **Scan Details:**
+            - Workflow: ${context.workflow}
+            - Run ID: ${context.runId}
+            - Commit: ${context.sha}
+            
+            Please address these issues promptly.`,
+            labels: ['security', 'high-priority', 'dependencies']
+          });
+
+    - name: Upload audit reports
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: security-audit-reports
+        path: |
+          npm-audit.json
+          snyk-audit.json
