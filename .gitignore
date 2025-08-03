@@ -1,0 +1,455 @@
+# Agent Mesh Protocol - TypeScript SDK .gitignore
+# Official TypeScript/JavaScript SDK implementation for the Agent Mesh Protocol
+# Supports both Browser and Node.js environments with full type definitions
+
+# ==============================================================================
+# Node.js Dependencies and Package Management
+# ==============================================================================
+
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Package lock files (choose one based on preference)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Optional npm cache directory
+.npm
+
+# npx cache
+.npx
+
+# Yarn Integrity file
+.yarn-integrity
+
+# ==============================================================================
+# TypeScript Build Artifacts
+# ==============================================================================
+
+# Compiled output
+dist/
+build/
+lib/
+out/
+es/
+esm/
+cjs/
+umd/
+
+# TypeScript cache
+*.tsbuildinfo
+.tscache/
+
+# TypeScript incremental build
+*.tsbuild
+
+# Source maps (if not needed in repo)
+*.map
+
+# ==============================================================================
+# JavaScript and TypeScript Development
+# ==============================================================================
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+.nyc_output/
+
+# Temporary folders
+.tmp/
+tmp/
+temp/
+
+# ==============================================================================
+# Testing Frameworks
+# ==============================================================================
+
+# Jest
+jest-results/
+.jest/
+
+# Vitest
+.vitest/
+vitest-results/
+
+# Playwright
+test-results/
+playwright-report/
+playwright/.cache/
+
+# Cypress
+cypress/downloads/
+cypress/screenshots/
+cypress/videos/
+
+# General test outputs
+test-output/
+test-reports/
+.coverage/
+
+# ==============================================================================
+# Build Tools and Bundlers
+# ==============================================================================
+
+# Vite
+.vite/
+vite.config.js.timestamp-*
+
+# Rollup
+rollup.config.js.timestamp-*
+
+# Webpack
+webpack-stats.json
+.webpack/
+
+# Parcel
+.parcel-cache/
+.cache/
+
+# Turbo
+.turbo/
+
+# ==============================================================================
+# Development Servers and Hot Reload
+# ==============================================================================
+
+# Next.js
+.next/
+out/
+
+# React
+.react/
+
+# Storybook
+storybook-static/
+.storybook/dist/
+
+# Development server logs
+dev-server.log
+
+# ==============================================================================
+# Browser and Client-Side
+# ==============================================================================
+
+# Browser extension artifacts
+web-ext-artifacts/
+
+# Service worker cache
+sw-cache/
+
+# Browser testing
+.browser-test-cache/
+
+# ==============================================================================
+# Documentation Generation
+# ==============================================================================
+
+# TypeDoc
+docs/api/
+typedoc-output/
+
+# JSDoc
+jsdoc-output/
+
+# Auto-generated documentation
+docs/generated/
+api-docs/
+
+# ==============================================================================
+# IDE and Editor Files
+# ==============================================================================
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# WebStorm/IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*.un~
+Session.vim
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# ==============================================================================
+# Operating System Files
+# ==============================================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.tmp
+*.temp
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ==============================================================================
+# Environment and Configuration
+# ==============================================================================
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.env.staging
+
+# Local configuration
+config.local.js
+config.local.ts
+local.config.js
+local.config.ts
+
+# Secrets and credentials
+*.secret
+*.private
+secrets.json
+credentials.json
+.credentials
+
+# ==============================================================================
+# SDK Development Specific
+# ==============================================================================
+
+# TypeScript SDK build artifacts
+sdk-build/
+sdk-dist/
+
+# Generated type definitions (if auto-generated)
+types/generated/
+*.generated.d.ts
+
+# Protocol compliance test results
+compliance-test-results/
+protocol-validation/
+
+# SDK example outputs
+example-outputs/
+demo-results/
+
+# Performance benchmarks
+benchmark-results/
+perf-data/
+
+# Integration test artifacts
+integration-test-logs/
+e2e-test-results/
+
+# ==============================================================================
+# React and UI Components (if included)
+# ==============================================================================
+
+# React hooks testing
+.react-hooks-testing-library/
+
+# React DevTools
+.react-devtools/
+
+# Component library build
+component-lib/dist/
+
+# Storybook build
+storybook-build/
+
+# ==============================================================================
+# WebSocket and Real-time Testing
+# ==============================================================================
+
+# WebSocket test logs
+websocket-test-logs/
+ws-test-results/
+
+# Real-time test artifacts
+realtime-test-data/
+
+# ==============================================================================
+# Bundle Analysis and Optimization
+# ==============================================================================
+
+# Bundle analyzer reports
+bundle-analyzer-report.html
+webpack-bundle-analyzer/
+
+# Bundle size tracking
+.bundlewatch.json
+bundle-size-report.json
+
+# Tree shaking analysis
+tree-shake-analysis/
+
+# ==============================================================================
+# Linting and Code Quality
+# ==============================================================================
+
+# ESLint cache
+.eslintcache
+
+# Prettier cache
+.prettiercache
+
+# SonarQube
+.sonarjs/
+
+# Code quality reports
+quality-reports/
+lint-results/
+
+# ==============================================================================
+# Security and Dependency Scanning
+# ==============================================================================
+
+# Security audit results
+security-audit.json
+vulnerability-report.json
+
+# Dependency check results
+dependency-check-report.html
+
+# Snyk reports
+.snyk
+
+# ==============================================================================
+# Continuous Integration
+# ==============================================================================
+
+# GitHub Actions artifacts (if running locally)
+.github-actions/
+
+# CircleCI artifacts
+.circleci/artifacts/
+
+# ==============================================================================
+# Package Publishing
+# ==============================================================================
+
+# npm pack artifacts
+*.tgz
+
+# Publishing logs
+publish.log
+
+# Release artifacts
+release/
+releases/
+
+# ==============================================================================
+# Monorepo Tools (if applicable)
+# ==============================================================================
+
+# Lerna
+lerna-debug.log*
+
+# Rush
+.rush/
+common/temp/
+
+# Nx
+.nx/cache/
+dist/
+
+# ==============================================================================
+# Logs and Debug Information
+# ==============================================================================
+
+# General logs
+*.log
+logs/
+log/
+
+# Debug logs
+debug.log
+debug-*.log
+
+# Error logs
+error.log
+errors/
+
+# ==============================================================================
+# Temporary and Cache Files
+# ==============================================================================
+
+# OS generated files
+*.log
+*.cache
+
+# Application cache
+.cache/
+cache/
+
+# Temporary files
+*.tmp
+*.temp
+
+# ==============================================================================
+# AMP SDK Specific
+# ==============================================================================
+
+# Agent mesh test data
+amp-test-data/
+agent-test-logs/
+
+# Message routing test results
+routing-test-results/
+
+# Transport layer test artifacts
+transport-test-logs/
+
+# Framework integration tests
+framework-integration-tests/
+
+# Browser compatibility test results
+browser-compat-results/

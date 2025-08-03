@@ -1,0 +1,301 @@
+name: Bug Report
+description: Report a bug or issue with the AMP TypeScript/JavaScript SDK
+title: "[BUG] "
+labels: ["bug", "typescript", "needs-triage"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a bug in the AMP TypeScript/JavaScript SDK! Please fill out the form below to help us understand and reproduce the issue.
+        
+        Before submitting, please:
+        - Search existing issues to avoid duplicates
+        - Check our [TypeScript SDK documentation](https://docs.agentmeshprotocol.io/typescript-sdk) for common issues
+        - Try reproducing with the latest version
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is
+      placeholder: Describe what happened...
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Detailed steps to reproduce the behavior
+      placeholder: |
+        1. Install AMP TypeScript SDK with...
+        2. Create client with configuration...
+        3. Call method...
+        4. Observe error...
+      value: |
+        1. 
+        2. 
+        3. 
+    validations:
+      required: true
+
+  - type: textarea
+    id: code-sample
+    attributes:
+      label: Minimal Code Sample
+      description: Provide a minimal code sample that reproduces the issue
+      placeholder: |
+        ```typescript
+        import { AMPClient, AMPAgent } from '@agentmeshprotocol/typescript-sdk';
+        
+        // Your code that reproduces the issue
+        const client = new AMPClient({...});
+        const agent = new AMPAgent({...});
+        // Issue occurs here
+        ```
+      render: typescript
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What you expected to happen
+      placeholder: Describe the expected behavior...
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened
+      placeholder: Describe what actually happened...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: How severe is this bug?
+      options:
+        - Low (minor inconvenience)
+        - Medium (affects functionality)
+        - High (blocks major functionality)
+        - Critical (SDK unusable)
+    validations:
+      required: true
+
+  - type: input
+    id: sdk-version
+    attributes:
+      label: AMP TypeScript SDK Version
+      description: Which version of the TypeScript SDK are you using?
+      placeholder: "1.0.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: runtime
+    attributes:
+      label: JavaScript Runtime
+      description: Which JavaScript runtime are you using?
+      options:
+        - Node.js
+        - Browser (Chrome)
+        - Browser (Firefox)
+        - Browser (Safari)
+        - Browser (Edge)
+        - Deno
+        - Bun
+        - React Native
+        - Electron
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: runtime-version
+    attributes:
+      label: Runtime Version
+      description: Version of your JavaScript runtime
+      placeholder: "Node.js 18.17.0, Chrome 120.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: language
+    attributes:
+      label: Language
+      description: Are you using TypeScript or JavaScript?
+      options:
+        - TypeScript
+        - JavaScript
+    validations:
+      required: true
+
+  - type: input
+    id: typescript-version
+    attributes:
+      label: TypeScript Version
+      description: TypeScript version (if applicable)
+      placeholder: "5.0.0"
+
+  - type: dropdown
+    id: package-manager
+    attributes:
+      label: Package Manager
+      description: Which package manager are you using?
+      options:
+        - npm
+        - yarn
+        - pnpm
+        - bun
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: bundler
+    attributes:
+      label: Bundler/Build Tool
+      description: Which bundler or build tool are you using?
+      options:
+        - Webpack
+        - Vite
+        - Rollup
+        - ESBuild
+        - Parcel
+        - Next.js
+        - Create React App
+        - Angular CLI
+        - Vue CLI
+        - No bundler (native ES modules)
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: module-system
+    attributes:
+      label: Module System
+      description: Which module system are you using?
+      options:
+        - ES Modules (ESM)
+        - CommonJS (CJS)
+        - Mixed (ESM + CJS)
+        - AMD
+        - UMD
+        - Unknown
+    validations:
+      required: true
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Environment
+      description: Where are you running the SDK?
+      options:
+        - Development (local)
+        - Browser (production)
+        - Node.js server
+        - Serverless (Vercel/Netlify)
+        - Docker container
+        - CI/CD pipeline
+        - React Native app
+        - Electron app
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating System
+      description: Your operating system and version
+      placeholder: "Ubuntu 20.04 / macOS 12.0 / Windows 11"
+    validations:
+      required: true
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Package.json Dependencies
+      description: Relevant dependencies from package.json
+      placeholder: |
+        {
+          "@agentmeshprotocol/typescript-sdk": "^1.0.0",
+          "typescript": "^5.0.0",
+          "react": "^18.0.0"
+        }
+      render: json
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error Logs and Stack Trace
+      description: Full error messages and stack traces (browser console or Node.js)
+      placeholder: |
+        Error: Something went wrong
+            at AMPClient.connect (amp-client.ts:123:45)
+            at async main (index.ts:67:8)
+      render: text
+
+  - type: textarea
+    id: config
+    attributes:
+      label: Configuration
+      description: Relevant AMP configuration (remove sensitive data)
+      placeholder: |
+        {
+          "protocol": "AMP/1.0",
+          "transport": {"type": "websocket"},
+          "agent": {"id": "test-agent"}
+        }
+      render: json
+
+  - type: dropdown
+    id: browser-compatibility
+    attributes:
+      label: Browser Compatibility Issue
+      description: Is this a browser-specific issue?
+      options:
+        - Not applicable (Node.js/Deno/Bun)
+        - Affects all browsers
+        - Chrome only
+        - Firefox only
+        - Safari only
+        - Edge only
+        - Mobile browsers only
+        - Unknown
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Any other context about the problem
+      placeholder: |
+        - Network configuration
+        - CORS issues (browser)
+        - Build configuration
+        - TypeScript compiler options
+        - Framework-specific details
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-submission Checklist
+      options:
+        - label: I have searched existing issues for duplicates
+          required: true
+        - label: I have tried with the latest SDK version
+          required: true
+        - label: I have provided a minimal code sample
+          required: true
+        - label: I have included full error logs and stack traces
+          required: true
+        - label: I have removed sensitive information
+          required: true
